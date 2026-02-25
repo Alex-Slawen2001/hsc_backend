@@ -1,0 +1,68 @@
+.catalog-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.sort {
+    display: flex;
+    align-items: center;
+}
+
+.sort select {
+    background: var(--surface);
+    color: var(--text-main);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--radius);
+    padding: 10px 42px 10px 12px;
+    cursor: pointer;
+    transition: var(--transition);
+    outline: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    line-height: 1.2;
+}
+
+.sort select:hover {
+    border-color: rgba(79,138,255,.6);
+}
+
+.sort select:focus {
+    border-color: rgba(79,138,255,.9);
+    box-shadow: 0 0 0 3px rgba(79,138,255,.18);
+}
+
+.sort {
+    position: relative;
+}
+
+.sort::after {
+    content: "▾";
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+    font-size: 14px;
+}
+
+.sort select option {
+    background: var(--bg-soft);
+    color: var(--text-main);
+}
+
+@media (max-width: 768px) {
+    .catalog-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .sort,
+    .sort select {
+        width: 100%;
+    }
+}

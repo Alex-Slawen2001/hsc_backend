@@ -1,0 +1,50 @@
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.success-message,
+.error-message {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    z-index: 10000;
+    animation: slideIn 0.3s ease;
+}
+
+.success-message {
+    background: #00C6A7;
+    color: white;
+}
+
+.error-message {
+    background: #ff4757;
+    color: white;
+}
+
+.field-error {
+    color: #ff4757;
+    font-size: 13px;
+    margin-top: 5px;
+    padding-left: 5px;
+}
