@@ -15,27 +15,22 @@ class RegisterController extends Controller
         return view('auth.register');
     }
 
-    public function register(Request $request)
+    public function store(Request $request)
     {
         $data = $request->validate([
-            'firstName' => ['required','string','max:255'],
-            'lastName' => ['required','string','max:255'],
+            'name' => ['required','string','max:255'],
             'email' => ['required','email','max:255','unique:users,email'],
-            'phone' => ['required','string','max:50'],
-            'username' => ['required','alpha_num','min:4','max:255','unique:users,name'],
-            'password' => ['required','string','min:8'],
-            'confirmPassword' => ['required','same:password'],
-            'terms' => ['accepted'],
+            'password' => ['required','string','min:6','confirmed'],
         ]);
 
         $user = User::create([
-            'name' => $data['username'],
+            'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
         Auth::login($user);
 
-        return response()->json(['ok' => true, 'redirect' => url('/dashboard')]);
+        return redirect('/dashboard');
     }
 }

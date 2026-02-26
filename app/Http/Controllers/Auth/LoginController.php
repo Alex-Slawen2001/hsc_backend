@@ -13,24 +13,21 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
+    public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'username' => ['required','string'],
+            'email' => ['required','email'],
             'password' => ['required','string'],
         ]);
 
-        $remember = (bool)$request->boolean('remember');
-
-        $login = $credentials['username'];
-        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-
-        if (Auth::attempt([$field => $login, 'password' => $credentials['password']], $remember)) {
+        if (Auth::attempt($credentials, (bool)$request->boolean('remember'))) {
             $request->session()->regenerate();
-            return response()->json(['ok' => true, 'redirect' => url('/dashboard')]);
+            return redirect()->intended('/dashboard');
         }
 
-        return response()->json(['ok' => false, 'message' => 'Неверный логин или пароль.'], 422);
+        return back()->withErrors([
+            'email' => 'Неверный email или пароль',
+        ])->onlyInput('email');
     }
 
     public function logout(Request $request)

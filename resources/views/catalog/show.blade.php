@@ -57,8 +57,18 @@
                 @endif
 
                 <div class="actions">
-                    <button class="btn-primary" type="button" onclick="alert('Демо: корзина не подключена')">В корзину</button>
-                    <button class="btn-outline js-open-consult" type="button">Запросить КП</button>
+
+                    <form method="POST" action="/cart/add/{{ $product->id }}">
+                        @csrf
+                        <button class="btn-primary" type="submit">В корзину</button>
+                    </form>
+
+                    <a style="text-align: center;" class="btn-primary" href="/cart">
+                        Корзина ({{ $cartCount ?? 0 }})
+                    </a>
+
+                    <button class="btn-primary js-open-consult">Запросить КП</button>
+
                 </div>
 
                 <div class="attributes">

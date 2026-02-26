@@ -11,6 +11,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\Admin\ProductAdminController;
 
 // Главная
 Route::get('/', HomeController::class);
@@ -25,6 +27,22 @@ Route::redirect('/pages/detail/product.html', '/products/reduktor-mi-8', 301);
 Route::redirect('/pages/detail/product2.html', '/products/lopast-mi-17', 301);
 Route::redirect('/pages/detail/product3.html', '/products/nav-x4', 301);
 Route::redirect('/pages/detail/product4.html', '/products/gidronasos-hp-240', 301);
+// Корзина
+Route::get('/cart', [CartController::class, 'index']);
+Route::post('/cart/add/{product}', [CartController::class, 'add']);
+Route::post('/cart/update', [CartController::class, 'update']);
+Route::post('/cart/remove/{product}', [CartController::class, 'remove']);
+Route::post('/cart/clear', [CartController::class, 'clear']);
+
+// Админка товаров (только auth + can:admin)
+Route::middleware(['auth', 'can:admin'])->prefix('admin')->group(function () {
+    Route::resource('products', ProductAdminController::class)->except(['show']);
+});
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware('auth');
+
 
 // Новости
 Route::get('/pages/news.html', [NewsController::class, 'index']);

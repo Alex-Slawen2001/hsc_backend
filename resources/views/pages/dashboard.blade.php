@@ -3,7 +3,7 @@
 @section('title', 'Личный кабинет')
 
 @section('content')
-<div class="container" style="padding: 40px 0;">
+<div class="container" style="padding: 40px 40px;">
     <h1 style="margin-bottom: 10px;">Личный кабинет</h1>
     <p style="opacity:.9;">Вы вошли как <strong>{{ auth()->user()->name }}</strong> ({{ auth()->user()->email }}).</p>
 
