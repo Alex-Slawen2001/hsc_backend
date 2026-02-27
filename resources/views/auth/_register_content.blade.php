@@ -37,6 +37,7 @@
                 </div>
 
                 <form id="registrationForm" method="POST" action="/register">
+                    @csrf
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-section active" id="section1">
                         <div class="form-row">
@@ -156,7 +157,7 @@
                             На вашу электронную почту отправлено письмо с подтверждением регистрации.
                             Пожалуйста, проверьте почту и следуйте инструкциям для активации учетной записи.
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="location.href='https://passport.hsc-copter.com/login'">
+                        <button type="button" class="btn btn-primary" onclick="location.href='/pages/login.html'">
                             Перейти к входу <i>→</i>
                         </button>
                     </div>

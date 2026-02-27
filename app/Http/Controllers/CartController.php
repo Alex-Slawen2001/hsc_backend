@@ -16,7 +16,18 @@ class CartController extends Controller
     public function add(Request $request, Product $product)
     {
         Cart::add($product, (int)$request->input('qty', 1));
-        return redirect('/cart')->with('ok', 'Товар добавлен в корзину');
+
+        if ($request->ajax() || $request->wantsJson()) {
+            $cart = Cart::detailed();
+            return response()->json([
+                'ok' => true,
+                'message' => 'Товар добавлен в корзину',
+                'cartCount' => (int)array_sum(Cart::items()),
+                'total' => (int)($cart['total'] ?? 0),
+            ]);
+        }
+
+        return redirect()->back()->with('ok', 'Товар добавлен в корзину');
     }
 
     public function update(Request $request)
@@ -24,18 +35,50 @@ class CartController extends Controller
         foreach ((array)$request->input('items', []) as $productId => $qty) {
             Cart::setQty((int)$productId, (int)$qty);
         }
+
+        if ($request->ajax() || $request->wantsJson()) {
+            $cart = Cart::detailed();
+            return response()->json([
+                'ok' => true,
+                'message' => 'Корзина обновлена',
+                'cartCount' => (int)array_sum(Cart::items()),
+                'total' => (int)($cart['total'] ?? 0),
+            ]);
+        }
+
         return redirect('/cart')->with('ok', 'Корзина обновлена');
     }
 
-    public function remove(Product $product)
+    public function remove(Request $request, Product $product)
     {
         Cart::remove($product->id);
+
+        if ($request->ajax() || $request->wantsJson()) {
+            $cart = Cart::detailed();
+            return response()->json([
+                'ok' => true,
+                'message' => 'Товар удалён',
+                'cartCount' => (int)array_sum(Cart::items()),
+                'total' => (int)($cart['total'] ?? 0),
+            ]);
+        }
+
         return redirect('/cart')->with('ok', 'Товар удалён');
     }
 
-    public function clear()
+    public function clear(Request $request)
     {
         Cart::clear();
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'Корзина очищена',
+                'cartCount' => 0,
+                'total' => 0,
+            ]);
+        }
+
         return redirect('/cart')->with('ok', 'Корзина очищена');
     }
 }

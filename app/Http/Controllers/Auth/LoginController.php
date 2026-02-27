@@ -13,21 +13,37 @@ class LoginController extends Controller
         return view('auth.login');
     }
 
+    // Роут вызывает ->login(), поэтому метод обязан существовать
+    public function login(Request $request)
+    {
+        return $this->authenticate($request);
+    }
+
     public function authenticate(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required','email'],
-            'password' => ['required','string'],
+        $data = $request->validate([
+            'username' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string'],
+            'remember' => ['nullable'],
         ]);
 
-        if (Auth::attempt($credentials, (bool)$request->boolean('remember'))) {
+        $login = trim($data['username']);
+        $password = $data['password'];
+        $remember = (bool)$request->boolean('remember');
+
+        // Если ввели email → логиним по email, иначе по name
+        $credentials = filter_var($login, FILTER_VALIDATE_EMAIL)
+            ? ['email' => $login, 'password' => $password]
+            : ['name' => $login, 'password' => $password];
+
+        if (Auth::attempt($credentials, $remember)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
 
         return back()->withErrors([
-            'email' => 'Неверный email или пароль',
-        ])->onlyInput('email');
+            'username' => 'Неверный логин/email или пароль',
+        ])->onlyInput('username');
     }
 
     public function logout(Request $request)
@@ -35,7 +51,6 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-
         return redirect('/');
     }
 }

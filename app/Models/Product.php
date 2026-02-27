@@ -21,22 +21,21 @@ class Product extends Model
         'gallery_images',
         'short_description',
         'description',
+
+        // tabs
+        'description_html',
+        'specs_json',
+        'compat_json',
+        'docs_json',
     ];
 
     protected $casts = [
         'price_rub' => 'integer',
         'gallery_images' => 'array',
-        'specs_json'     => 'array',
-        'specs'          => 'array',
 
-        'compat_json'    => 'array',
-        'compatibility'  => 'array',
-
-        'docs_json'      => 'array',
-        'docs'           => 'array',
-        'documents'      => 'array',
-
-        'images'         => 'array',
-        'gallery'        => 'array',
+        // tabs
+        'specs_json' => 'array',
+        'compat_json' => 'array',
+        'docs_json' => 'array',
     ];
 }

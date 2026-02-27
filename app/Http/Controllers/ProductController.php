@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -11,23 +10,20 @@ class ProductController extends Controller
     {
         $product = Product::query()->where('slug', $slug)->firstOrFail();
 
-
-        $rawSpecs = $product->specs_json ?? $product->specs ?? [];
+        $rawSpecs = $product->specs_json ?? [];
         $rawSpecs = is_array($rawSpecs) ? $rawSpecs : [];
 
         $specs = [];
-        foreach ($rawSpecs as $k => $v) {
-            if (is_int($k) && is_array($v) && count($v) === 2) {
-                $specs[] = [$v[0], $v[1]];
-                continue;
+        foreach ($rawSpecs as $row) {
+            if (is_array($row) && count($row) === 2) {
+                $specs[] = [$row[0], $row[1]];
             }
-            $specs[] = [$k, $v];
         }
 
-        $compat = $product->compat_json ?? $product->compatibility ?? [];
+        $compat = $product->compat_json ?? [];
         $compat = is_array($compat) ? $compat : [];
 
-        $docs = $product->docs_json ?? $product->docs ?? $product->documents ?? [];
+        $docs = $product->docs_json ?? [];
         $docs = is_array($docs) ? $docs : [];
 
         return view('catalog.show', [
