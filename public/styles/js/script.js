@@ -1,121 +1,113 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const slides = document.querySelectorAll('.carousel-slide');
+    // -------------------------
+    // HERO carousel
+    // -------------------------
+    const heroSlides = document.querySelectorAll('.carousel-slide');
     const prevBtn = document.querySelector('.carousel-prev');
     const nextBtn = document.querySelector('.carousel-next');
-    let current = 0;
-    const total = slides.length;
 
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('active', i === index);
-        });
-    }
+    if (heroSlides.length && prevBtn && nextBtn) {
+        let current = 0;
+        const total = heroSlides.length;
 
-    function nextSlide() {
-        current = (current + 1) % total;
+        function showSlide(index) {
+            heroSlides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            current = (current + 1) % total;
+            showSlide(current);
+        }
+
+        function prevSlide() {
+            current = (current - 1 + total) % total;
+            showSlide(current);
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        setInterval(nextSlide, 5000);
         showSlide(current);
     }
 
-    function prevSlide() {
-        current = (current - 1 + total) % total;
-        showSlide(current);
-    }
-
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-
-    // Автопрокрутка каждые 5 секунд
-    setInterval(nextSlide, 5000);
-
-    showSlide(current);
-});
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
+    // -------------------------
+    // Product slider (Модернизируем)
+    // -------------------------
     const slider = document.querySelector('.product-slider');
     const slides = document.querySelectorAll('.product-slide');
-    const prevBtn = document.querySelector('.slider-prev');
-    const nextBtn = document.querySelector('.slider-next');
+    const sliderPrev = document.querySelector('.slider-prev');
+    const sliderNext = document.querySelector('.slider-next');
 
-    let index = 0;
-    const slideWidth = slides[0].offsetWidth + 20; // ширина + gap
+    if (slider && slides.length && sliderPrev && sliderNext) {
+        let index = 0;
 
-    function updateSlider() {
-        slider.style.transform = `translateX(-${index * slideWidth}px)`;
+        function getSlideWidth() {
+            // ширина + gap
+            const w = slides[0].offsetWidth || 0;
+            return w ? (w + 20) : 0;
+        }
+
+        function updateSlider() {
+            const slideWidth = getSlideWidth();
+            if (!slideWidth) return;
+            slider.style.transform = `translateX(-${index * slideWidth}px)`;
+        }
+
+        sliderNext.addEventListener('click', () => {
+            index = (index < slides.length - 1) ? index + 1 : 0;
+            updateSlider();
+        });
+
+        sliderPrev.addEventListener('click', () => {
+            index = (index > 0) ? index - 1 : slides.length - 1;
+            updateSlider();
+        });
+
+        window.addEventListener('resize', updateSlider);
+        updateSlider();
     }
 
-    nextBtn.addEventListener('click', () => {
-        if(index < slides.length - 1) {
-            index++;
-        } else {
-            index = 0;
-        }
-        updateSlider();
+    // -------------------------
+    // Кнопки на главной (без падений)
+    // -------------------------
+    const go = (id, url) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener('click', () => window.location.href = url);
+    };
+
+    go('but_catalog1', '/pages/catalog.html');
+    go('but_catalog2', '/pages/catalog.html');
+
+    // Новости (у тебя сейчас редирект на старую деталь — оставляю как было)
+    go('but_news1', '/pages/detail/news_detail.html');
+    go('but_news2', '/pages/detail/news_detail.html');
+    go('but_news3', '/pages/detail/news_detail.html');
+
+    // -------------------------
+    // Кнопки карточек "Мы модернизируем" -> вертолётная модернизация
+    // -------------------------
+    document.querySelectorAll('[data-button="btn_product"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            window.location.href = '/pages/modern.html';
+        });
     });
 
-    prevBtn.addEventListener('click', () => {
-        if(index > 0) {
-            index--;
-        } else {
-            index = slides.length - 1;
-        }
-        updateSlider();
+    // -------------------------
+    // Кнопки карточек "Каталог решений для дронов" -> модернизация дронов
+    // -------------------------
+    document.querySelectorAll('[data-button="dronCat"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            window.location.href = '/pages/modern_dron.html';
+        });
     });
-});
 
-
-const burger = document.getElementById('burger');
-const nav = document.getElementById('mobileNav');
-const overlay = document.getElementById('navOverlay');
-const navClose = document.getElementById('navClose');
-
-function closeMenu() {
-    nav.classList.remove('active');
-    overlay.classList.remove('active');
-}
-
-burger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    overlay.classList.toggle('active');
-});
-
-overlay.addEventListener('click', closeMenu);
-navClose.addEventListener('click', closeMenu);
-
-nav.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', closeMenu);
-});
-
-
-
-but1 = document.getElementById('but_catalog1').addEventListener('click',function () {
-    window.location.href = '/pages/catalog.html'
-});
-but2 = document.getElementById('but_catalog2').addEventListener('click',function (){
-    window.location.href= "/pages/catalog.html"
-});
-but3 = document.getElementById('but_news1').addEventListener('click',function() {
-    window.location.href = '/pages/detail/news_detail.html'
-});
-but4 = document.getElementById('but_news2').addEventListener('click',function() {
-    window.location.href = '/pages/detail/news_detail.html'
-});
-but5 = document.getElementById('but_news3').addEventListener('click',function() {
-    window.location.href = '/pages/detail/news_detail.html'
-});
-
-const buttons = document.querySelectorAll('[data-button="btn_product"]');
-
-buttons.forEach(function(button, index) {
-    button.addEventListener('click',function() {
-        window.location.href = '/pages/modern.html'
-    })
-});
-
-document.addEventListener('DOMContentLoaded', () => {
+    // -------------------------
+    // Мобильные подменю (оставляем твою логику, но безопасно)
+    // -------------------------
     const mq = window.matchMedia('(max-width: 768px)');
 
     function closeAllSubmenus(except = null) {
@@ -124,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // перехват клика по "родителю"
     document.addEventListener('click', (e) => {
         if (!mq.matches) return;
 
@@ -141,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.classList.toggle('is-open', willOpen);
     }, true);
 
-
+    // клик вне меню закрывает подменю
     document.addEventListener('click', (e) => {
         if (!mq.matches) return;
         if (e.target.closest('.nav-item.has-submenu')) return;
@@ -150,14 +143,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     mq.addEventListener?.('change', () => closeAllSubmenus());
 });
-
-
-//     const burger = document.getElementById('burger');
-//     const nav = document.querySelector('.header__nav');
-//
-//     if (burger && nav) {
-//     burger.addEventListener('click', () => {
-//         nav.classList.toggle('is-open');
-//     });
-// }
-

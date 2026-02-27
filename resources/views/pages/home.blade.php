@@ -1,8 +1,5 @@
 @extends('layouts.app')
 
-    <script src="/styles/js/calc.js"></script>
-
-
 @section('title', 'HSC Copter — Главная')
 
 @push('styles')
@@ -10,5 +7,9 @@
 @endpush
 
 @section('content')
-@include('pages._home_content')
+    @include('pages._home_content')
 @endsection
+
+@push('scripts')
+    <script src="/styles/js/calc.js"></script>
+@endpush

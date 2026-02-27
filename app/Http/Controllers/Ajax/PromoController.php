@@ -3,40 +3,33 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StorePromoLeadRequest;
-use App\Models\PromoLead;
+use App\Models\Inquiry;
+use Illuminate\Http\Request;
 
 class PromoController extends Controller
 {
-    public function store(StorePromoLeadRequest $request)
+    public function store(Request $request)
     {
-        $base = (int) $request->input('Base', 0);
-        $extra = (int) $request->input('Extra', 0);
-        $sum = max(0, $base) + max(0, $extra);
-        $discountPercent = 15;
-        $discountAmount = (int) round($sum * ($discountPercent / 100));
-        $total = $sum - $discountAmount;
+        $data = $request->validate([
+            'name' => ['required','string','max:255'],
+            'phone' => ['nullable','string','max:255'],
+            'email' => ['nullable','email','max:255'],
+            'message' => ['nullable','string','max:5000'],
+        ]);
 
-        PromoLead::create([
-            'name' => $request->string('Name'),
-            'phone' => $request->string('Phone'),
-            'email' => $request->string('Email')->toString() ?: null,
-            'model' => $request->string('Model')->toString() ?: null,
-            'message' => $request->string('Message')->toString() ?: null,
-            'base_price' => $base,
-            'extra_price' => $extra,
-            'discount_percent' => $discountPercent,
-            'discount_amount' => $discountAmount,
-            'total_after_discount' => $total,
+        Inquiry::create([
+            'message' => "Промо/калькулятор:\n" . ($data['message'] ?? ''),
+            'name' => $data['name'],
+            'email' => $data['email'] ?? null,
+            'phone' => $data['phone'] ?? null,
+            'company' => null,
             'ip' => $request->ip(),
             'user_agent' => $request->userAgent(),
         ]);
 
         return response()->json([
             'ok' => true,
-            'discount_percent' => $discountPercent,
-            'discount_amount' => $discountAmount,
-            'total' => $total,
+            'message' => 'Заявка отправлена! Мы свяжемся с вами в ближайшее время.',
         ]);
     }
 }

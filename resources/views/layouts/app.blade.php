@@ -17,6 +17,140 @@
 
     <link rel="stylesheet" href="/styles/css/styles.css">
     @stack('styles')
+
+    <style>
+        /* ОСНОВНЫЕ СТИЛИ ДЛЯ БУРГЕРА - БЕЛЫЙ ЦВЕТ */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 100;
+        }
+
+        .burger span {
+            width: 100%;
+            height: 3px;
+            background: #ffffff; /* Белый цвет */
+            transition: all 0.3s;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 992px) {
+            .burger {
+                display: flex !important;
+            }
+        }
+
+        /* ТОЛЬКО ВЫРАВНИВАНИЕ МЕНЮ - НИКАКИХ ИЗМЕНЕНИЙ ЦВЕТОВ */
+
+        @media (min-width: 993px) {
+            /* Скрываем кнопки в навигации на десктопе */
+            .nav .reg_button,
+            .nav .login_button,
+            .nav form button.nav__link {
+                display: none;
+            }
+
+            /* Показываем кнопки в header__actions */
+            .header__actions .btn-primary,
+            .header__actions .btn-outline {
+                display: inline-block;
+            }
+
+            /* ТОЛЬКО ВЫРАВНИВАНИЕ МЕНЮ */
+            .header-inner {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .nav {
+                display: flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 25px;
+                flex: 1;
+                margin: 0 20px;
+            }
+
+            .burger {
+                display: none !important;
+            }
+        }
+
+        @media (max-width: 992px) {
+            /* ПОЛНОСТЬЮ СКРЫВАЕМ ВСЕ КНОПКИ В HEADER__ACTIONS НА МОБИЛКАХ */
+            .header__actions .btn-primary,
+            .header__actions .btn-outline,
+            .header__actions form {
+                display: none !important;
+            }
+
+            /* Показываем кнопки в навигации */
+            .nav .reg_button,
+            .nav .login_button,
+            .nav form button.nav__link {
+                display: block;
+                width: 100%;
+                text-align: center;
+                margin: 5px 0;
+            }
+
+            /* Убираем ссылку Кабинет из мобильного меню */
+            .nav a[href="/dashboard"] {
+                display: none;
+            }
+
+            /* Кнопка выхода красная (как просили ранее) */
+            .nav form button.nav__link {
+                border: 2px solid #ff0000 !important;
+                color: #ff0000 !important;
+                background: transparent !important;
+                border-radius: 5px !important;
+                padding: 10px !important;
+                font-weight: bold !important;
+            }
+        }
+
+        /* Убираем лишние кнопки */
+        .header .nav .btn-primary,
+        .header .nav .btn-outline {
+            display: none;
+        }
+
+        .header .header__actions .reg_button,
+        .header .header__actions .login_button {
+            display: none;
+        }
+
+        /* КНОПКИ ОДИНАКОВОГО РАЗМЕРА */
+        .header__actions .btn-primary,
+        .header__actions .btn-outline,
+        .header__actions form button {
+            min-width: 100px;
+            text-align: center;
+            padding: 8px 16px;
+            box-sizing: border-box;
+            display: inline-block;
+        }
+
+        .header__actions form {
+            display: inline-block;
+            margin: 0;
+        }
+
+        /* Убеждаемся что кнопка Кабинет и кнопка Выйти одного размера */
+        .header__actions .btn-primary,
+        .header__actions form button {
+            min-width: 100px;
+        }
+    </style>
 </head>
 <body>
 
@@ -36,9 +170,12 @@
             </button>
 
             <a href="/" class="nav__link">Главная</a>
+
+            <!-- ИНФО с выпадающим списком -->
             <div class="nav-item has-submenu">
-                <a class="nav__link nav-parent" href="/pages/about.html">О нас</a>
+                <a class="nav__link nav-parent" href="#">Инфо</a>
                 <div class="nav-submenu">
+                    <a class="nav-submenu__link" href="/pages/about.html">О нас</a>
                     <a class="nav-submenu__link" href="/pages/obuchenie.html">Обучение</a>
                     <a class="nav-submenu__link" href="/pages/document.html">Документация</a>
                 </div>
@@ -46,6 +183,7 @@
 
             <a href="/pages/catalog.html" class="nav__link">Каталог</a>
             <a href="/pages/news.html" class="nav__link">Новости</a>
+
             <div class="nav-item has-submenu">
                 <a class="nav__link nav-parent" href="/pages/modern.html">Модернизация</a>
                 <div class="nav-submenu">
@@ -53,13 +191,14 @@
                     <a class="nav-submenu__link" href="/pages/modern_dron.html">Дроны</a>
                 </div>
             </div>
+
             <a href="/pages/contacts.html" class="nav__link">Контакты</a>
 
-            @auth
-                <a href="/dashboard" class="nav__link">Кабинет</a>
-                <form action="/logout" method="POST" style="display:inline">
+        @auth
+            <!-- Ссылка Кабинет скрыта через CSS -->
+                <form action="/logout" method="POST" style="display:inline; width:100%;">
                     @csrf
-                    <button type="submit" class="nav__link login_button" style="background:none;border:0;cursor:pointer">Выйти</button>
+                    <button type="submit" class="nav__link login_button" style="background:none; cursor:pointer; width:100%;">Выйти</button>
                 </form>
             @else
                 <a href="/pages/reg.html" class="nav__link reg_button">Регистрация</a>
@@ -69,9 +208,18 @@
         </nav>
 
         <div class="header__actions">
-            @guest
+            @auth
+                <a href="/dashboard" class="btn-primary nav-cta" style="text-decoration:none;">Кабинет</a>
+                <form action="/logout" method="POST" style="display:inline; margin:0;">
+                    @csrf
+                    <button type="submit" class="btn-outline nav-cta" style="cursor:pointer;">
+                        Выйти
+                    </button>
+                </form>
+            @else
                 <a href="/pages/reg.html" class="btn-primary nav-cta">Регистрация</a>
-            @endguest
+                <a href="/pages/login.html" class="btn-outline nav-cta">Войти</a>
+            @endauth
 
             <button class="burger" id="burger" aria-label="Открыть меню">
                 <span></span><span></span><span></span>
@@ -118,7 +266,6 @@
     </div>
 </footer>
 
-{{-- Модалка консультации (как в исходнике) --}}
 <div class="consult-modal" id="consultModal">
     <div class="consult-overlay js-close-consult"></div>
 

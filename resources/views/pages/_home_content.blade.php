@@ -58,9 +58,7 @@
                     <div class="promo-content">
                         <h3>Специальное предложение</h3>
                         <p>Получите скидку 15% на первую модернизацию</p>
-                        <button class="btn-primary btn-promo js-open-promo">
-                            Получить скидку
-                        </button>
+                        <button type="button" class="btn-primary js-open-calc">Получить скидку</button>
                     </div>
                 </div>
 
@@ -218,6 +216,83 @@
         </div>
     </div>
 </section>
+
+<div class="modal-overlay" id="calcModal" aria-hidden="true" style="display:none;">
+    <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="calcTitle">
+        <button type="button" class="modal-close js-calc-close" aria-label="Закрыть">×</button>
+
+        <h2 id="calcTitle" style="margin:0 0 10px;">Калькулятор / заявка на скидку</h2>
+        <p style="margin:0 0 14px;opacity:.8;">Оставьте контакты — мы рассчитаем стоимость и применим скидку.</p>
+
+        <form id="calcForm" method="POST" action="/ajax/promo/send" class="consult-grid" style="gap:12px;">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+            <div class="consult-field">
+                <input type="text" name="name" placeholder="Ваше имя*" required>
+                <div class="field-error" data-error="name"></div>
+            </div>
+
+            <div class="consult-field">
+                <input type="tel" name="phone" placeholder="Телефон">
+                <div class="field-error" data-error="phone"></div>
+            </div>
+
+            <div class="consult-field">
+                <input type="email" name="email" placeholder="E-mail">
+                <div class="field-error" data-error="email"></div>
+            </div>
+
+            <div class="consult-field full">
+                <textarea name="message" placeholder="Что нужно рассчитать? (модернизация/комплект/задача)"></textarea>
+                <div class="field-error" data-error="message"></div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%;">Отправить</button>
+
+            <div class="form-error" id="calcFormError" style="display:none;"></div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modal-overlay{
+        position:fixed; inset:0; z-index:9999;
+        background: rgba(0,0,0,.65);
+        display:flex; align-items:center; justify-content:center;
+        padding: 16px;
+    }
+    .modal-window{
+        width: min(720px, 100%);
+        background: rgba(25,25,25,.95);
+        border:1px solid rgba(255,255,255,.12);
+        border-radius: 18px;
+        padding: 16px;
+        position: relative;
+    }
+    .modal-close{
+        position:absolute; right:10px; top:10px;
+        width:40px; height:40px; border-radius: 12px;
+        border:1px solid rgba(255,255,255,.12);
+        background: rgba(255,255,255,.06);
+        color:#fff; font-size:24px; line-height:1;
+        cursor:pointer;
+    }
+    .field-error{
+        color:#ff6b6b;
+        font-size:12px;
+        margin-top:6px;
+        min-height: 14px;
+    }
+    .form-error{
+        margin-top: 8px;
+        padding: 10px 12px;
+        border-radius: 12px;
+        border: 1px solid rgba(255,107,107,.5);
+        background: rgba(255,107,107,.08);
+        color: #ffb3b3;
+        font-size: 13px;
+    }
+</style>
 
 <section class="cta">
     <div class="container cta-box">
