@@ -2338,7 +2338,6 @@ body {
 /*окно калькулятора*/
 
 
-/* Cart badge */
 .btn-cart {
     position: relative;
     display: inline-flex;
@@ -2361,5 +2360,58 @@ body {
     line-height: 1;
 }
 
-/* Если товаров 0 — можно чуть приглушить */
+
 .cart-badge:empty { display:none; }
+
+
+/* ===== Фильтр программ ===== */
+
+.view-toggle{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.view-toggle__btn{
+    padding: 10px 18px;
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+
+.view-toggle__btn:hover{
+    background: rgba(255,255,255,.08);
+    border-color: rgba(255,255,255,.25);
+}
+
+
+.view-toggle__btn.active{
+    background: linear-gradient(135deg,#4e7fff,#2e5bff);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(78,127,255,.35);
+}
+
+
+@media (max-width: 600px){
+    .view-toggle{
+        gap: 8px;
+    }
+
+    .view-toggle__btn{
+        padding: 9px 14px;
+        font-size: 13px;
+        border-radius: 12px;
+    }
+}

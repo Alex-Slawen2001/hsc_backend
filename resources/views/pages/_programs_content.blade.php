@@ -215,14 +215,13 @@
                     </div>
                 </div>
 
-            </div><!-- /training-center-list -->
+            </div>
 
         </div>
     </div>
 </div>
 
 <script>
-    // ФИЛЬТР ПРОГРАММ
     document.addEventListener('DOMContentLoaded', function() {
         const filterButtons = document.querySelectorAll('.view-toggle__btn');
         const cards = document.querySelectorAll('.training-center-card');
@@ -231,11 +230,9 @@
             button.addEventListener('click', function() {
                 const filter = this.dataset.filter;
 
-                // active переключение
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 this.classList.add('active');
 
-                // фильтрация
                 cards.forEach(card => {
                     const category = card.dataset.category;
                     if (filter === 'all' || filter === category) {

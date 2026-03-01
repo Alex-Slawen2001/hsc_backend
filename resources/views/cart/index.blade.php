@@ -61,6 +61,19 @@
             .cart-footer-actions .btn-primary,
             .cart-footer-actions .btn-outline{ width:100%; }
         }
+        @media (max-width: 768px){
+
+            .cart-wrap{
+                padding-left:16px;
+                padding-right:16px;
+            }
+            
+            .cart-wrap.container{
+                padding-left:16px !important;
+                padding-right:16px !important;
+            }
+
+        }
     </style>
 @endpush
 
@@ -78,7 +91,6 @@
             <p>Корзина пуста.</p>
             <a class="btn-primary" href="/pages/catalog.html" style="display:inline-block;margin-top:12px;">В каталог</a>
         @else
-            {{-- форма обновления количества (единая) --}}
             <form id="cartUpdateForm" method="POST" action="/cart/update" style="display:none;">
                 @csrf
             </form>
@@ -111,7 +123,6 @@
                                 <button class="qty-btn" type="button" data-qty-plus>+</button>
                             </div>
 
-                            {{-- обновить (общая форма) --}}
                             <button class="btn-outline btn-mini" form="cartUpdateForm" type="submit" title="Обновить">⟳</button>
 
                             <form method="POST" action="/cart/remove/{{ $p->id }}" style="margin:0;">
@@ -136,7 +147,6 @@
                 </div>
             </div>
 
-            {{-- оформление заказа --}}
             <div style="margin-top:18px; padding:16px; border:1px solid rgba(255,255,255,.12); border-radius:16px; background: rgba(0,0,0,.2);">
                 <h2 style="margin:0 0 10px; font-size:18px;">Оформление заказа</h2>
                 <p style="margin:0 0 14px; opacity:.8;">Оставьте контакты — мы подтвердим наличие, сроки и свяжемся с вами.</p>

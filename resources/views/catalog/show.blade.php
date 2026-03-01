@@ -93,11 +93,11 @@
                 <div class="tab-btn" data-tab="3">Документы</div>
             </div>
 
-            <div class="tab-content active">
+            <div style="margin-bottom:10px;" class="tab-content active">
                 {!! $descSafe !!}
             </div>
 
-            <div class="tab-content">
+            <div style="margin-bottom:10px;" class="tab-content">
                 @forelse($specs as $row)
                     <div class="spec-row">
                         <span>{{ (string)($row[0] ?? '') }}</span>
@@ -108,7 +108,7 @@
                 @endforelse
             </div>
 
-            <div class="tab-content">
+            <div style="margin-bottom:10px;" class="tab-content">
                 @forelse($compat as $c)
                     <div class="compat-item">{{ $c }}</div>
                 @empty
@@ -116,13 +116,13 @@
                 @endforelse
             </div>
 
-            <div class="tab-content">
+            <div style="margin-bottom:10px;" class="tab-content">
                 @forelse($docs as $d)
                     @php
                         $title = is_array($d) ? ($d['title'] ?? '') : (string)$d;
                         $url   = is_array($d) ? ($d['url'] ?? '#') : '#';
                     @endphp
-                    <a class="doc-link" href="{{ $url }}" target="_blank" rel="noopener">{{ $title }}</a>
+                    <a class="doc-link" href="{{ $url }}" target="_blank" rel="noopener">{{ $title }}</a><br>
                 @empty
                     <div class="compat-item" style="opacity:.75;">Документы не указаны</div>
                 @endforelse
@@ -135,7 +135,6 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Tabs
             const tabBtns = Array.from(document.querySelectorAll('.tab-btn'));
             const tabContents = Array.from(document.querySelectorAll('.tab-content'));
 
@@ -153,7 +152,6 @@
 
             if (!tabBtns.some(b => b.classList.contains('active'))) openTab(0);
 
-            // Gallery
             const mainImage = document.getElementById('mainProductImage');
             const thumbs = Array.from(document.querySelectorAll('.gallery-thumbs .thumb'));
 
@@ -166,7 +164,6 @@
                 });
             });
 
-            // AJAX add-to-cart
             const form = document.querySelector('form.js-add-to-cart');
             const countEl = document.getElementById('cartCount');
             const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');

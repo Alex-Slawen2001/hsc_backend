@@ -19,7 +19,7 @@
     @stack('styles')
 
     <style>
-        /* ОСНОВНЫЕ СТИЛИ ДЛЯ БУРГЕРА - БЕЛЫЙ ЦВЕТ */
+        /* BURGER */
         .burger {
             display: none;
             flex-direction: column;
@@ -36,7 +36,7 @@
         .burger span {
             width: 100%;
             height: 3px;
-            background: #ffffff; /* Белый цвет */
+            background: #ffffff;
             transition: all 0.3s;
             border-radius: 2px;
         }
@@ -47,23 +47,20 @@
             }
         }
 
-        /* ТОЛЬКО ВЫРАВНИВАНИЕ МЕНЮ - НИКАКИХ ИЗМЕНЕНИЙ ЦВЕТОВ */
-
+        /* DESKTOP */
         @media (min-width: 993px) {
-            /* Скрываем кнопки в навигации на десктопе */
+
             .nav .reg_button,
             .nav .login_button,
             .nav form button.nav__link {
                 display: none;
             }
 
-            /* Показываем кнопки в header__actions */
             .header__actions .btn-primary,
             .header__actions .btn-outline {
                 display: inline-block;
             }
 
-            /* ТОЛЬКО ВЫРАВНИВАНИЕ МЕНЮ */
             .header-inner {
                 display: flex;
                 align-items: center;
@@ -84,17 +81,26 @@
             }
         }
 
+        /* MOBILE */
         @media (max-width: 992px) {
-            /* ПОЛНОСТЬЮ СКРЫВАЕМ ВСЕ КНОПКИ В HEADER__ACTIONS НА МОБИЛКАХ */
+
+            /* скрываем кнопки справа */
             .header__actions .btn-primary,
             .header__actions .btn-outline,
             .header__actions form {
                 display: none !important;
             }
 
-            /* Показываем кнопки в навигации */
+            /* ✅ Регистрация / Войти как обычные пункты меню */
             .nav .reg_button,
-            .nav .login_button,
+            .nav .login_button {
+                display: block;
+                width: auto;
+                text-align: left;
+                margin: 0;
+            }
+
+            /* ❗ ВЫЙТИ НЕ ТРОГАЕМ */
             .nav form button.nav__link {
                 display: block;
                 width: 100%;
@@ -102,12 +108,12 @@
                 margin: 5px 0;
             }
 
-            /* Убираем ссылку Кабинет из мобильного меню */
+            /* убираем кабинет из моб меню */
             .nav a[href="/dashboard"] {
                 display: none;
             }
 
-            /* Кнопка выхода красная (как просили ранее) */
+            /* красная кнопка выйти */
             .nav form button.nav__link {
                 border: 2px solid #ff0000 !important;
                 color: #ff0000 !important;
@@ -118,7 +124,7 @@
             }
         }
 
-        /* Убираем лишние кнопки */
+        /* убираем лишние */
         .header .nav .btn-primary,
         .header .nav .btn-outline {
             display: none;
@@ -129,7 +135,6 @@
             display: none;
         }
 
-        /* КНОПКИ ОДИНАКОВОГО РАЗМЕРА */
         .header__actions .btn-primary,
         .header__actions .btn-outline,
         .header__actions form button {
@@ -143,12 +148,6 @@
         .header__actions form {
             display: inline-block;
             margin: 0;
-        }
-
-        /* Убеждаемся что кнопка Кабинет и кнопка Выйти одного размера */
-        .header__actions .btn-primary,
-        .header__actions form button {
-            min-width: 100px;
         }
     </style>
 </head>
@@ -171,7 +170,6 @@
 
             <a href="/" class="nav__link">Главная</a>
 
-            <!-- ИНФО с выпадающим списком -->
             <div class="nav-item has-submenu">
                 <a class="nav__link nav-parent" href="#">Инфо</a>
                 <div class="nav-submenu">
@@ -194,11 +192,12 @@
 
             <a href="/pages/contacts.html" class="nav__link">Контакты</a>
 
-        @auth
-            <!-- Ссылка Кабинет скрыта через CSS -->
+            @auth
                 <form action="/logout" method="POST" style="display:inline; width:100%;">
                     @csrf
-                    <button type="submit" class="nav__link login_button" style="background:none; cursor:pointer; width:100%;">Выйти</button>
+                    <button type="submit" class="nav__link login_button" style="background:none; cursor:pointer; width:100%;">
+                        Выйти
+                    </button>
                 </form>
             @else
                 <a href="/pages/reg.html" class="nav__link reg_button">Регистрация</a>
@@ -234,7 +233,6 @@
 
 <footer class="footer">
     <div class="container footer-grid">
-
         <div class="footer-brand">
             <strong class="footer-logo">HSC Copter</strong>
             <p class="footer-desc">
@@ -258,58 +256,12 @@
             <a href="tel:+70000000000">+7 (000) 000-00-00</a>
             <span class="footer-note">Пн–Пт, 9:00–18:00</span>
         </div>
-
     </div>
 
     <div class="footer-bottom">
         © 2026 HSC Copter. Все права защищены
     </div>
 </footer>
-
-<div class="consult-modal" id="consultModal">
-    <div class="consult-overlay js-close-consult"></div>
-
-    <div class="consult-window">
-        <button class="consult-close js-close-consult">✕</button>
-
-        <h2 class="consult-title">Запросить консультацию</h2>
-        <p class="consult-subtitle">Оставьте сообщение — мы свяжемся с вами в ближайшее время</p>
-
-        <form action="/ajax/message/send" method="POST" id="consultForm">
-            @csrf
-
-            <div class="consult-grid">
-                <div class="consult-field full">
-                    <textarea name="Message" placeholder="Введите ваше сообщение*" required></textarea>
-                    <div id="messageError"></div>
-                </div>
-
-                <div class="consult-field">
-                    <input type="text" name="Name" placeholder="Ваше имя*" required>
-                    <div id="nameError"></div>
-                </div>
-
-                <div class="consult-field">
-                    <input type="email" name="Email" placeholder="Ваш e-mail">
-                    <div id="emailError"></div>
-                </div>
-
-                <div class="consult-field">
-                    <input type="tel" name="Phone" placeholder="Телефон">
-                    <div id="phoneError"></div>
-                </div>
-
-                <div class="consult-field" style="display:none">
-                    <input type="text" name="Company" placeholder="Компания">
-                    <div id="companyError"></div>
-                </div>
-            </div>
-
-            <button type="submit" class="consult-submit">Отправить запрос</button>
-        </form>
-
-    </div>
-</div>
 
 <script src="/styles/js/script.js"></script>
 <script src="/styles/js/form.js"></script>

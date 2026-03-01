@@ -141,7 +141,7 @@
                                 <i>←</i> Назад
                             </button>
                             <button type="submit" class="btn btn-primary">
-                                Зарегистрироваться <i>✓</i>
+                                Завершить <i>✓</i>
                             </button>
                         </div>
                     </div>

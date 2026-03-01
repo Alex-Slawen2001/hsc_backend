@@ -221,68 +221,132 @@
     <div class="modal-window" role="dialog" aria-modal="true" aria-labelledby="calcTitle">
         <button type="button" class="modal-close js-calc-close" aria-label="Закрыть">×</button>
 
-        <h2 id="calcTitle" style="margin:0 0 10px;">Калькулятор / заявка на скидку</h2>
-        <p style="margin:0 0 14px;opacity:.8;">Оставьте контакты — мы рассчитаем стоимость и применим скидку.</p>
+        <div class="modal-body">
+            <h2 id="calcTitle" class="modal-title">Заявка на скидку</h2>
+            <p class="modal-subtitle">Оставьте контакты — мы рассчитаем стоимость и применим скидку.</p>
 
-        <form id="calcForm" method="POST" action="/ajax/promo/send" class="consult-grid" style="gap:12px;">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <form id="calcForm" method="POST" action="/ajax/promo/send" class="consult-grid modal-form">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-            <div class="consult-field">
-                <input type="text" name="name" placeholder="Ваше имя*" required>
-                <div class="field-error" data-error="name"></div>
-            </div>
+                <div class="consult-field">
+                    <input type="text" name="name" placeholder="Ваше имя*" required>
+                    <div class="field-error" data-error="name"></div>
+                </div>
 
-            <div class="consult-field">
-                <input type="tel" name="phone" placeholder="Телефон">
-                <div class="field-error" data-error="phone"></div>
-            </div>
+                <div class="consult-field">
+                    <input type="tel" name="phone" placeholder="Телефон">
+                    <div class="field-error" data-error="phone"></div>
+                </div>
 
-            <div class="consult-field">
-                <input type="email" name="email" placeholder="E-mail">
-                <div class="field-error" data-error="email"></div>
-            </div>
+                <div class="consult-field">
+                    <input type="email" name="email" placeholder="E-mail">
+                    <div class="field-error" data-error="email"></div>
+                </div>
 
-            <div class="consult-field full">
-                <textarea name="message" placeholder="Что нужно рассчитать? (модернизация/комплект/задача)"></textarea>
-                <div class="field-error" data-error="message"></div>
-            </div>
+                <div class="consult-field full">
+                    <textarea name="message" placeholder="Что нужно рассчитать? (модернизация/комплект/задача)"></textarea>
+                    <div class="field-error" data-error="message"></div>
+                </div>
 
-            <button type="submit" class="btn-primary" style="width:100%;">Отправить</button>
+                <button type="submit" class="btn-primary modal-submit">Отправить</button>
 
-            <div class="form-error" id="calcFormError" style="display:none;"></div>
-        </form>
+                <div class="form-error" id="calcFormError" style="display:none;"></div>
+            </form>
+        </div>
     </div>
 </div>
 
 <style>
+
     .modal-overlay{
-        position:fixed; inset:0; z-index:9999;
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
         background: rgba(0,0,0,.65);
-        display:flex; align-items:center; justify-content:center;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
         padding: 16px;
+        box-sizing: border-box;
     }
+
     .modal-window{
         width: min(720px, 100%);
+        max-width: 100%;
+        box-sizing: border-box;
+
         background: rgba(25,25,25,.95);
-        border:1px solid rgba(255,255,255,.12);
+        border: 1px solid rgba(255,255,255,.12);
         border-radius: 18px;
-        padding: 16px;
+
         position: relative;
+        overflow: hidden;
     }
+
+
+    .modal-body{
+        padding: 16px;
+        box-sizing: border-box;
+
+        max-height: calc(100vh - 32px);
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .modal-title{
+        margin: 0 0 10px;
+        font-size: 20px;
+        line-height: 1.2;
+        font-weight: 800;
+    }
+
+    .modal-subtitle{
+        margin: 0 0 14px;
+        opacity: .8;
+        font-size: 14px;
+        line-height: 1.35;
+    }
+
     .modal-close{
-        position:absolute; right:10px; top:10px;
-        width:40px; height:40px; border-radius: 12px;
-        border:1px solid rgba(255,255,255,.12);
+        position: absolute;
+        right: 10px;
+        top: 10px;
+
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+
+        border: 1px solid rgba(255,255,255,.12);
         background: rgba(255,255,255,.06);
-        color:#fff; font-size:24px; line-height:1;
-        cursor:pointer;
+        color: #fff;
+
+        font-size: 24px;
+        line-height: 1;
+        cursor: pointer;
+        z-index: 2;
     }
+
+    .modal-form{
+        gap: 12px;
+    }
+
+    .modal-submit{
+        display: block;
+        margin: 8px auto 0;
+        padding: 12px 26px;
+        border-radius: 14px;
+        min-width: 200px;
+    }
+
     .field-error{
-        color:#ff6b6b;
-        font-size:12px;
-        margin-top:6px;
+        color: #ff6b6b;
+        font-size: 12px;
+        margin-top: 6px;
         min-height: 14px;
     }
+
     .form-error{
         margin-top: 8px;
         padding: 10px 12px;
@@ -291,6 +355,58 @@
         background: rgba(255,107,107,.08);
         color: #ffb3b3;
         font-size: 13px;
+    }
+
+    @media (max-width: 480px){
+        .modal-overlay{
+            padding: 10px;
+        }
+
+        .modal-body{
+            padding: 12px;
+            max-height: calc(100vh - 20px);
+        }
+
+        .modal-title{
+            font-size: 18px;
+            margin-bottom: 8px;
+            padding-right: 44px;
+        }
+
+        .modal-subtitle{
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .modal-close{
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            right: 8px;
+            top: 8px;
+            font-size: 22px;
+        }
+
+        .modal-form{
+            gap: 10px;
+        }
+
+        .modal-submit{
+            padding: 11px 22px;
+            border-radius: 14px;
+            min-width: 180px;
+        }
+
+        .modal-window .consult-field input,
+        .modal-window .consult-field textarea{
+            font-size: 14px;
+            padding: 12px 12px;
+            border-radius: 14px;
+        }
+
+        .modal-window .consult-field textarea{
+            min-height: 96px;
+        }
     }
 </style>
 
