@@ -417,3 +417,65 @@
     </div>
 </section>
 
+<div class="consult-modal" id="consultModal">
+    <div class="consult-overlay js-close-consult"></div>
+
+    <div class="consult-window">
+        <button class="consult-close js-close-consult">✕</button>
+
+        <h2 class="consult-title">
+            Запросить консультацию
+        </h2>
+
+        <p class="consult-subtitle">
+            Оставьте сообщение — мы свяжемся с вами в ближайшее время
+        </p>
+
+        <form id="consultForm">
+            <div class="consult-grid">
+                <div class="consult-field full">
+                    <textarea name="message" id="messageField" placeholder="Введите ваше сообщение*" required=""></textarea>
+                    <div class="error-message" id="messageError" style="display: none;"></div>
+                </div>
+
+                <div class="consult-field">
+                    <input type="text" name="name" id="nameField" placeholder="Ваше имя*" required="">
+                    <div class="error-message" id="nameError" style="display: none;"></div>
+                </div>
+
+                <div class="consult-field">
+                    <input type="email" name="email" id="emailField" placeholder="Ваш e-mail">
+                    <div class="error-message" id="emailError" style="display: none;"></div>
+                </div>
+
+                <div class="consult-field">
+                    <input type="tel" name="phone" id="phoneField" placeholder="Телефон">
+                    <div class="error-message" id="phoneError" style="display: none;"></div>
+                </div>
+                <div class="consult-field">
+                    <input type="text" name="company" id="companyField" placeholder="Название вашей компании" required="">
+                    <div class="error-message" id="companyError" style="display: none;"></div>
+                </div>
+
+            </div>
+
+            <button type="submit" class="consult-submit" id="submitBtn">
+                Отправить запрос
+            </button>
+
+            <div class="form-message" id="successMessage" style="display: none;">
+                <div class="success-icon">✓</div>
+                <h3>Заявка успешно отправлена!</h3>
+                <p>Мы свяжемся с вами в ближайшее время.</p>
+                <button type="button" class="close-message-btn js-close-consult">Закрыть</button>
+            </div>
+
+            <div class="form-message error" id="errorMessage" style="display: none;">
+                <div class="error-icon">⚠</div>
+                <h3>Произошла ошибка</h3>
+                <p id="errorText">Пожалуйста, попробуйте позже.</p>
+                <button type="button" class="retry-btn">Попробовать снова</button>
+            </div>
+        </form>
+    </div>
+</div>
