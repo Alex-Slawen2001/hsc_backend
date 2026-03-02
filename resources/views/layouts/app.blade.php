@@ -15,7 +15,7 @@
         window.__CSRF_TOKEN__ = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     </script>
 
-    <link rel="stylesheet" href="/styles/css/styles.css">
+    <link rel="stylesheet" href="{{ asset('styles/css/main.css') }}">
     @stack('styles')
 
     <style>
@@ -263,8 +263,8 @@
     </div>
 </footer>
 
-<script src="/styles/js/script.js"></script>
-<script src="/styles/js/form.js"></script>
+<script src="{{ asset('styles/js/script.js') }}"></script>
+<script src="{{ asset('styles/js/form.js') }}"></script>
 @stack('scripts')
 
 <script>
