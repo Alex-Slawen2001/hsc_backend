@@ -3,7 +3,8 @@
 @section('title', 'Systems')
 
 @push('styles')
-    <link rel="stylesheet" href="/styles/css/obuchenie.css">
+    <link rel="stylesheet" href="{{ asset('styles/css/obuchenie.css') }}">
+
 @endpush
 
 @section('content')
