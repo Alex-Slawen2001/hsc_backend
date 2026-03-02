@@ -17,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Gate::define('admin', fn ($user) => (bool)($user->is_admin ?? false));
 
-        // Счётчик корзины считаем через composer (сессия уже поднята middleware).
         View::composer('*', function ($view) {
             $items = session()->get('cart.items', []);
             $count = 0;
@@ -30,5 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('cartCount', $count);
         });
+        if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }
