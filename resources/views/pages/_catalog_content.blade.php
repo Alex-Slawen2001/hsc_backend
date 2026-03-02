@@ -36,7 +36,7 @@
 
             <div class="filter-group">
                 <label>Цена до</label>
-                <input type="number" placeholder="₽">
+                <input type="text" placeholder="₽ ✎">
             </div>
 
         </aside>
@@ -128,3 +128,134 @@
 
     </div>
 </div>
+
+<style>
+    /* Стили для полей фильтров (как на макете) */
+    .filters select,
+    .filters input[type="text"],
+    .filters input[type="number"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 2px solid #007bff; /* Яркая синяя обводка */
+        border-radius: 8px;
+        background-color: #f0f8ff; /* Светло-голубой фон (Aliceblue) */
+        font-size: 15px;
+        color: #003366;
+        box-sizing: border-box;
+        transition: 0.2s;
+    }
+
+    /* Для поля "Цена до" меняем тип на text, чтобы можно было добавить иконку в placeholder */
+    .filters input[type="text"]::placeholder,
+    .filters input[type="number"]::placeholder {
+        color: #007bff;
+        font-weight: 500;
+        opacity: 0.8;
+    }
+
+    /* Убираем стрелки у number (для опрятного вида, если останется number) */
+    .filters input[type="number"]::-webkit-outer-spin-button,
+    .filters input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .filters input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    /* Дополнительно: сделаем метки жирными, как на макете */
+    .filter-group label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+        color: #222;
+    }
+
+    /* Небольшой отступ для групп */
+    .filter-group {
+        margin-bottom: 20px;
+    }
+
+    /* Общие стили для страницы (можно добавить, если их не было) */
+    .catalog-layout {
+        display: flex;
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    .filters {
+        width: 260px;
+        flex-shrink: 0;
+    }
+
+    section {
+        flex: 1;
+    }
+
+    .catalog-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .catalog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 25px;
+    }
+
+    .product-card {
+        border: 1px solid #eee;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        background: white;
+    }
+
+    .product-image {
+        height: 160px;
+        background: #f9f9f9;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .img_product {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .product-body {
+        padding: 16px;
+    }
+
+    .btn-primary {
+        display: block;
+        background: #007bff;
+        padding: 10px 0;
+        border-radius: 6px;
+        margin-top: 12px;
+    }
+
+    .pagination {
+        margin-top: 35px;
+        display: flex;
+        gap: 8px;
+    }
+
+    .pagination a {
+        padding: 8px 14px;
+        border: 1px solid #dee2e6;
+        border-radius: 6px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .pagination a.active {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+</style>
