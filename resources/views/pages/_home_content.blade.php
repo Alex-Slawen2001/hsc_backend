@@ -479,3 +479,37 @@
         </form>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const modal = document.getElementById('consultModal');
+
+        if (!modal) {
+            console.warn('consultModal not found');
+            return;
+        }
+        document.querySelectorAll('.js-open-consult').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        document.querySelectorAll('.js-close-consult').forEach(btn => {
+            btn.addEventListener('click', () => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        const refreshBtn = document.getElementById('refreshCaptcha');
+        const captchaImg = document.getElementById('captchaImage');
+
+        if (refreshBtn && captchaImg) {
+            refreshBtn.addEventListener('click', () => {
+                captchaImg.src = '/ajax/captcha/image/' + Date.now();
+            });
+        }
+    });
+</script>
