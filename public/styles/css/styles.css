@@ -1307,7 +1307,7 @@ body {
 .filter-group input,
 .filter-group select {
   background-color: white;
-    color: black;
+    color: black !important;
 }
 
 /* ================= TOOLBAR ================= */
