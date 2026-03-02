@@ -16,6 +16,7 @@
     </script>
 
     <link rel="stylesheet" href="{{ asset('styles/css/main.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 
     <style>
