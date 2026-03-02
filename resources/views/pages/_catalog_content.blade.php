@@ -31,12 +31,12 @@
 
             <div class="filter-group">
                 <label>Номер детали (SKU)</label>
-                <input type="text" placeholder="Введите артикул">
+                <input style="background-color: white;color: black;" type="text" placeholder="Введите артикул">
             </div>
 
             <div class="filter-group">
                 <label>Цена до</label>
-                <input type="number" placeholder="₽">
+                <input style="background-color: white;color: black;" type="number" placeholder="₽">
             </div>
 
         </aside>
@@ -44,7 +44,7 @@
             <div class="catalog-toolbar">
                 <div>Найдено: <strong>124</strong></div>
                 <div class="sort">
-                    <select style="background-color: white;color: black;">
+                    <select>
                         <option>По умолчанию</option>
                         <option>Цена ↑</option>
                         <option>Цена ↓</option>
