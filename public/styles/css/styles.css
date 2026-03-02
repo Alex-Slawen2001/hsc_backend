@@ -1304,6 +1304,10 @@ body {
     border: none;
     /*color: white;*/
 }
+.filter-group select {
+  background-color: white;
+    color: black;
+}
 
 /* ================= TOOLBAR ================= */
 .catalog-toolbar {
