@@ -15,7 +15,7 @@
         window.__CSRF_TOKEN__ = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
     </script>
 
-    <link rel="stylesheet" href="{{ asset('styles/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/css/styles.css') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 
