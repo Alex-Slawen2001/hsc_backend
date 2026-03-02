@@ -1304,6 +1304,7 @@ body {
     border: none;
     /*color: white;*/
 }
+.filter-group input,
 .filter-group select {
   background-color: white;
     color: black;
