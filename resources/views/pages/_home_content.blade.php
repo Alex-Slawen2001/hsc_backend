@@ -78,7 +78,8 @@
                 <img style="width: 20%;" src="/styles/images/settings.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Drone Pro</h3>
-                <p>Промышленный дрон высокой дальности</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Промышленный дрон высокой дальности</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -86,7 +87,8 @@
                 <img style="width: 20%;" src="/styles/images/more_set.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Surveyor</h3>
-                <p>Аэросъемка и мониторинг ситуации</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Аэросъемка и мониторинг ситуации</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -94,7 +96,8 @@
                 <img style="width: 20%;" src="/styles/images/img_2.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Tactical</h3>
-                <p>Тактические задачи и безопасность</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Тактические задачи и безопасность</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -102,7 +105,8 @@
                 <img style="width: 20%;" src="/styles/images/generator.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Agrodron</h3>
-                <p>Сельскохозяйственный мониторинг и анализ</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Сельскохозяйственный мониторинг и анализ</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -110,7 +114,8 @@
                 <img style="width: 20%;" src="/styles/images/bpla.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Guardian</h3>
-                <p>Система видеонаблюдения с БПЛА</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Система видеонаблюдения с БПЛА</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -118,7 +123,8 @@
                 <img style="width: 20%;" src="/styles/images/helicopter.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Cargo Light</h3>
-                <p>Грузовой дрон для доставки до 5 кг</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Грузовой дрон для доставки до 5 кг</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -126,7 +132,8 @@
                 <img style="width: 20%;" src="/styles/images/set.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Inspector</h3>
-                <p>Инспекция промышленных объектов и сооружений</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Инспекция промышленных объектов и сооружений</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
@@ -134,7 +141,8 @@
                 <img style="width: 20%;" src="/styles/images/bpla2.png">
                 <h3 style=" margin-top: 20px;
     margin-bottom: 20px;">HSC Thermal</h3>
-                <p>Тепловизионный дрон для поисковых операций</p>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Тепловизионный дрон для поисковых операций</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
         </div>
@@ -202,22 +210,28 @@
         <div class="grid-news">
             <article class="news-card">
                 <span class="news-date">29 Января 2026</span>
-                <h3>Запуск нового поколения дронов</h3>
-                <p>Компания HSC Copter представила новую линейку БПЛА...</p>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">Запуск нового поколения дронов</h3>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Компания HSC Copter представила новую линейку БПЛА...</p>
                 <button style="width: max-content;" id="but_news1" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="news-card">
                 <span class="news-date">18 Января 2026</span>
-                <h3>Расширение партнерской сети</h3>
-                <p>Мы открыли представительства в новых регионах...</p>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">Расширение партнерской сети</h3>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Мы открыли представительства в новых регионах...</p>
                 <button style="width: max-content;" id="but_news2" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="news-card">
                 <span class="news-date">03 Января 2026</span>
-                <h3>Контракт с госструктурами</h3>
-                <p>Подписано соглашение на поставку беспилотных систем...</p>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">Контракт с госструктурами</h3>
+                <p style=" margin-top: 20px;
+    margin-bottom: 20px;">Подписано соглашение на поставку беспилотных систем...</p>
                 <button style="width: max-content;" id="but_news3" class="btn-primary">Подробнее</button>
             </article>
             <a style="color: #007bff;text-decoration: none;" href="/pages/news.html">Все новости</a>
