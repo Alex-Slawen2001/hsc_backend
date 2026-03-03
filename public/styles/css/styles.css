@@ -2420,3 +2420,23 @@ body {
         border-radius: 12px;
     }
 }
+.product-card {
+    background: var(--surface);
+    padding: 18px;
+    border-radius: var(--radius);
+    transition: var(--transition);
+}
+.product-card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: var(--transition);
+}
+@media (max-width: 992px) {
+    .product-card {
+        align-items: center;
+        text-align: center;
+    }
+}
