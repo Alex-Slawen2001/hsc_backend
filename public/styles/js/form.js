@@ -75,16 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const formData = new FormData(form);
 
-                // Убедимся, что поле message всегда отправляется
-                if (!formData.has('Message') || !formData.get('Message').trim()) {
-                    const messageField = fields.message.input;
-                    if (messageField && messageField.value.trim()) {
-                        formData.set('Message', messageField.value.trim());
-                    } else {
-                        throw new Error('Поле сообщения обязательно для заполнения');
-                    }
-                }
-
+                // Просто отправляем данные, без дополнительной проверки
                 const success = await sendToServer(formData);
 
                 if (success) {
@@ -334,11 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function sendToServer(formData) {
         try {
-            // Дополнительная проверка перед отправкой
-            if (!formData.get('Message') || !formData.get('Message').trim()) {
-                throw new Error('The message field is required.');
-            }
-
             const res = await fetch(form.getAttribute('action') || '/ajax/message/send', {
                 method: 'POST',
                 headers: {
