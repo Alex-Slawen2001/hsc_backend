@@ -37,6 +37,11 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
             clearAllErrors();
+            // Обновляем капчу при открытии модалки
+            const captchaImg = document.getElementById('captchaImage');
+            if (captchaImg) {
+                captchaImg.src = '/ajax/captcha/image/' + Date.now();
+            }
         });
     });
 
@@ -58,6 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Валидация перед отправкой
             if (!validateForm()) return;
 
             if (submitBtn) {
@@ -67,6 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 const formData = new FormData(form);
+
+                // Убедимся, что поле message всегда отправляется
+                if (!formData.has('Message') || !formData.get('Message').trim()) {
+                    const messageField = fields.message.input;
+                    if (messageField && messageField.value.trim()) {
+                        formData.set('Message', messageField.value.trim());
+                    } else {
+                        throw new Error('Поле сообщения обязательно для заполнения');
+                    }
+                }
+
                 const success = await sendToServer(formData);
 
                 if (success) {
@@ -74,6 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         closeModal();
                         resetForm();
+                        // Обновляем капчу после успешной отправки
+                        if (captchaImg) {
+                            captchaImg.src = '/ajax/captcha/image/' + Date.now();
+                        }
                     }, 1200);
                 } else {
                     showErrorMessage('Произошла ошибка при отправке. Попробуйте еще раз.');
@@ -99,24 +121,39 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateForm() {
         let isValid = true;
 
+        // Проверяем обязательные поля
         if (fields.message.input && !fields.message.input.value.trim()) {
             showFieldError(fields.message, 'Введите ваше сообщение');
             isValid = false;
+        } else if (fields.message.input) {
+            clearFieldError(fields.message);
         }
 
         if (fields.name.input && !fields.name.input.value.trim()) {
             showFieldError(fields.name, 'Введите ваше имя');
             isValid = false;
+        } else if (fields.name.input) {
+            clearFieldError(fields.name);
         }
 
-        if (fields.email.input && fields.email.input.value.trim() && !isValidEmail(fields.email.input.value.trim())) {
-            showFieldError(fields.email, 'Введите корректный email адрес');
-            isValid = false;
+        // Проверяем email если он заполнен
+        if (fields.email.input && fields.email.input.value.trim()) {
+            if (!isValidEmail(fields.email.input.value.trim())) {
+                showFieldError(fields.email, 'Введите корректный email адрес');
+                isValid = false;
+            } else {
+                clearFieldError(fields.email);
+            }
         }
 
-        if (fields.phone.input && fields.phone.input.value.trim() && !isValidPhone(fields.phone.input.value.trim())) {
-            showFieldError(fields.phone, 'Введите корректный номер телефона');
-            isValid = false;
+        // Проверяем телефон если он заполнен
+        if (fields.phone.input && fields.phone.input.value.trim()) {
+            if (!isValidPhone(fields.phone.input.value.trim())) {
+                showFieldError(fields.phone, 'Введите корректный номер телефона');
+                isValid = false;
+            } else {
+                clearFieldError(fields.phone);
+            }
         }
 
         return isValid;
@@ -127,18 +164,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const value = field.input.value.trim();
 
-        if (field.input.name === 'Message' && !value) return showFieldError(field, 'Введите ваше сообщение');
-        if (field.input.name === 'Name' && !value) return showFieldError(field, 'Введите ваше имя');
-        if (field.input.name === 'Email' && value && !isValidEmail(value)) return showFieldError(field, 'Введите корректный email адрес');
-        if (field.input.name === 'Phone' && value && !isValidPhone(value)) return showFieldError(field, 'Введите корректный номер телефона');
+        if (field.input.name === 'Message') {
+            if (!value) return showFieldError(field, 'Введите ваше сообщение');
+        }
+
+        if (field.input.name === 'Name') {
+            if (!value) return showFieldError(field, 'Введите ваше имя');
+        }
+
+        if (field.input.name === 'Email' && value) {
+            if (!isValidEmail(value)) return showFieldError(field, 'Введите корректный email адрес');
+        }
+
+        if (field.input.name === 'Phone' && value) {
+            if (!isValidPhone(value)) return showFieldError(field, 'Введите корректный номер телефона');
+        }
 
         clearFieldError(field);
         return true;
     }
 
     function showFieldError(field, message) {
-        clearFieldError(field);
-
         if (field.error) {
             field.error.textContent = message;
             field.error.style.display = 'block';
@@ -287,22 +333,53 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function sendToServer(formData) {
-        const res = await fetch(form.getAttribute('action') || '/ajax/message/send', {
-            method: 'POST',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': window.__CSRF_TOKEN__ || ''
-            },
-            body: formData
-        });
+        try {
+            // Дополнительная проверка перед отправкой
+            if (!formData.get('Message') || !formData.get('Message').trim()) {
+                throw new Error('The message field is required.');
+            }
 
-        if (!res.ok) {
-            const data = await res.json().catch(() => ({}));
-            throw new Error(data?.message || 'Ошибка сервера');
+            const res = await fetch(form.getAttribute('action') || '/ajax/message/send', {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': window.__CSRF_TOKEN__ || '',
+                    'Accept': 'application/json'
+                },
+                body: formData
+            });
+
+            let data;
+            try {
+                data = await res.json();
+            } catch (e) {
+                data = {};
+            }
+
+            if (!res.ok) {
+                // Обработка ошибок валидации
+                if (res.status === 422 && data.errors) {
+                    // Показываем ошибки валидации под соответствующими полями
+                    Object.keys(data.errors).forEach(key => {
+                        const fieldKey = key.toLowerCase();
+                        if (fields[fieldKey]) {
+                            showFieldError(fields[fieldKey], data.errors[key][0]);
+                        }
+                    });
+
+                    // Формируем сообщение об ошибке
+                    const errorMessages = Object.values(data.errors).flat();
+                    throw new Error(errorMessages.join(' '));
+                } else {
+                    throw new Error(data?.message || 'Ошибка сервера');
+                }
+            }
+
+            return data.ok === true;
+        } catch (error) {
+            console.error('Send to server error:', error);
+            throw error;
         }
-
-        const data = await res.json().catch(() => ({}));
-        return !!data.ok;
     }
 
     clearAllErrors();
