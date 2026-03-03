@@ -76,56 +76,64 @@
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/settings.png">
-                <h3>HSC Drone Pro</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Drone Pro</h3>
                 <p>Промышленный дрон высокой дальности</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/more_set.png">
-                <h3>HSC Surveyor</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Surveyor</h3>
                 <p>Аэросъемка и мониторинг ситуации</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/img_2.png">
-                <h3>HSC Tactical</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Tactical</h3>
                 <p>Тактические задачи и безопасность</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/generator.png">
-                <h3>HSC Agrodron</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Agrodron</h3>
                 <p>Сельскохозяйственный мониторинг и анализ</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/bpla.png">
-                <h3>HSC Guardian</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Guardian</h3>
                 <p>Система видеонаблюдения с БПЛА</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/helicopter.png">
-                <h3>HSC Cargo Light</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Cargo Light</h3>
                 <p>Грузовой дрон для доставки до 5 кг</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/set.png">
-                <h3>HSC Inspector</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Inspector</h3>
                 <p>Инспекция промышленных объектов и сооружений</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
 
             <article class="product-card">
                 <img style="width: 20%;" src="/styles/images/bpla2.png">
-                <h3>HSC Thermal</h3>
+                <h3 style=" margin-top: 20px;
+    margin-bottom: 20px;">HSC Thermal</h3>
                 <p>Тепловизионный дрон для поисковых операций</p>
                 <button data-button="dronCat" class="btn-primary">Подробнее</button>
             </article>
