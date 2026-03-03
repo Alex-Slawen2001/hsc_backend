@@ -28,6 +28,10 @@ document.addEventListener('DOMContentLoaded', () => {
         company: {
             input: form?.querySelector('input[name="Company"]'),
             error: document.getElementById('companyError')
+        },
+        captcha: {
+            input: form?.querySelector('input[name="CaptchaCode"]'),
+            error: document.getElementById('captchaError')
         }
     };
 
@@ -57,6 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (refreshBtn && captchaImg) {
         refreshBtn.addEventListener('click', () => {
             captchaImg.src = '/ajax/captcha/image/' + Date.now();
+            // Очищаем поле капчи при обновлении
+            if (fields.captcha.input) {
+                fields.captcha.input.value = '';
+            }
         });
     }
 
@@ -75,7 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 const formData = new FormData(form);
 
-                // Просто отправляем данные, без дополнительной проверки
+                // Для отладки - посмотрим что отправляется
+                console.log('Sending data:');
+                for (let [key, value] of formData.entries()) {
+                    console.log(key + ': ' + value);
+                }
+
                 const success = await sendToServer(formData);
 
                 if (success) {
@@ -88,12 +101,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             captchaImg.src = '/ajax/captcha/image/' + Date.now();
                         }
                     }, 1200);
-                } else {
-                    showErrorMessage('Произошла ошибка при отправке. Попробуйте еще раз.');
                 }
             } catch (error) {
                 console.error('Ошибка отправки формы:', error);
-                showErrorMessage(error.message || 'Произошла ошибка. Пожалуйста, попробуйте позже.');
+                // Не показываем ошибку если это ошибка валидации (уже показана под полями)
+                if (!error.message.includes('field is required')) {
+                    showErrorMessage(error.message || 'Произошла ошибка. Пожалуйста, попробуйте позже.');
+                }
             } finally {
                 if (submitBtn) {
                     submitBtn.disabled = false;
@@ -112,39 +126,37 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateForm() {
         let isValid = true;
 
-        // Проверяем обязательные поля
+        // Проверяем все обязательные поля
         if (fields.message.input && !fields.message.input.value.trim()) {
             showFieldError(fields.message, 'Введите ваше сообщение');
             isValid = false;
-        } else if (fields.message.input) {
-            clearFieldError(fields.message);
         }
 
         if (fields.name.input && !fields.name.input.value.trim()) {
             showFieldError(fields.name, 'Введите ваше имя');
             isValid = false;
-        } else if (fields.name.input) {
-            clearFieldError(fields.name);
         }
 
-        // Проверяем email если он заполнен
+        // Email не обязательный, но если заполнен - проверяем формат
         if (fields.email.input && fields.email.input.value.trim()) {
             if (!isValidEmail(fields.email.input.value.trim())) {
                 showFieldError(fields.email, 'Введите корректный email адрес');
                 isValid = false;
-            } else {
-                clearFieldError(fields.email);
             }
         }
 
-        // Проверяем телефон если он заполнен
+        // Phone не обязательный, но если заполнен - проверяем формат
         if (fields.phone.input && fields.phone.input.value.trim()) {
             if (!isValidPhone(fields.phone.input.value.trim())) {
                 showFieldError(fields.phone, 'Введите корректный номер телефона');
                 isValid = false;
-            } else {
-                clearFieldError(fields.phone);
             }
+        }
+
+        // Проверяем капчу если она есть
+        if (fields.captcha.input && !fields.captcha.input.value.trim()) {
+            showFieldError(fields.captcha, 'Введите код с картинки');
+            isValid = false;
         }
 
         return isValid;
@@ -155,20 +167,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const value = field.input.value.trim();
 
-        if (field.input.name === 'Message') {
-            if (!value) return showFieldError(field, 'Введите ваше сообщение');
+        if (field.input.name === 'Message' && !value) {
+            return showFieldError(field, 'Введите ваше сообщение');
         }
 
-        if (field.input.name === 'Name') {
-            if (!value) return showFieldError(field, 'Введите ваше имя');
+        if (field.input.name === 'Name' && !value) {
+            return showFieldError(field, 'Введите ваше имя');
         }
 
-        if (field.input.name === 'Email' && value) {
-            if (!isValidEmail(value)) return showFieldError(field, 'Введите корректный email адрес');
+        if (field.input.name === 'Email' && value && !isValidEmail(value)) {
+            return showFieldError(field, 'Введите корректный email адрес');
         }
 
-        if (field.input.name === 'Phone' && value) {
-            if (!isValidPhone(value)) return showFieldError(field, 'Введите корректный номер телефона');
+        if (field.input.name === 'Phone' && value && !isValidPhone(value)) {
+            return showFieldError(field, 'Введите корректный номер телефона');
+        }
+
+        if (field.input.name === 'CaptchaCode' && !value) {
+            return showFieldError(field, 'Введите код с картинки');
         }
 
         clearFieldError(field);
@@ -267,7 +283,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 .success-message { background: #00C6A7; color: white; }
                 .error-message { background: #ff4757; color: white; }
-                #messageError,#nameError,#emailError,#phoneError { color:#ff4757;font-size:13px;margin-top:5px;padding-left:5px;min-height:20px;display:none; }
+                #messageError, #nameError, #emailError, #phoneError, #captchaError {
+                    color: #ff4757;
+                    font-size: 13px;
+                    margin-top: 5px;
+                    padding-left: 5px;
+                    min-height: 20px;
+                    display: none;
+                }
             `;
             document.head.appendChild(style);
         }
@@ -336,32 +359,57 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             let data;
-            try {
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
                 data = await res.json();
-            } catch (e) {
-                data = {};
+            } else {
+                data = { message: await res.text() };
             }
 
             if (!res.ok) {
                 // Обработка ошибок валидации
-                if (res.status === 422 && data.errors) {
-                    // Показываем ошибки валидации под соответствующими полями
-                    Object.keys(data.errors).forEach(key => {
-                        const fieldKey = key.toLowerCase();
-                        if (fields[fieldKey]) {
-                            showFieldError(fields[fieldKey], data.errors[key][0]);
-                        }
-                    });
+                if (res.status === 422) {
+                    if (data.errors) {
+                        // Показываем ошибки валидации под соответствующими полями
+                        Object.keys(data.errors).forEach(key => {
+                            // Пробуем разные варианты имен полей
+                            const fieldKey = key.toLowerCase();
+                            let field = fields[fieldKey];
 
-                    // Формируем сообщение об ошибке
-                    const errorMessages = Object.values(data.errors).flat();
-                    throw new Error(errorMessages.join(' '));
-                } else {
-                    throw new Error(data?.message || 'Ошибка сервера');
+                            // Если не нашли по точному совпадению, пробуем другие варианты
+                            if (!field) {
+                                if (fieldKey === 'message' || fieldKey.includes('message')) {
+                                    field = fields.message;
+                                } else if (fieldKey === 'name' || fieldKey.includes('name')) {
+                                    field = fields.name;
+                                } else if (fieldKey === 'email' || fieldKey.includes('email')) {
+                                    field = fields.email;
+                                } else if (fieldKey === 'phone' || fieldKey.includes('phone')) {
+                                    field = fields.phone;
+                                } else if (fieldKey === 'company' || fieldKey.includes('company')) {
+                                    field = fields.company;
+                                } else if (fieldKey === 'captcha' || fieldKey.includes('captcha')) {
+                                    field = fields.captcha;
+                                }
+                            }
+
+                            if (field) {
+                                showFieldError(field, data.errors[key][0]);
+                            }
+                        });
+
+                        // Формируем сообщение об ошибке
+                        const errorMessages = Object.values(data.errors).flat();
+                        throw new Error(errorMessages.join(' '));
+                    } else if (data.message) {
+                        throw new Error(data.message);
+                    }
                 }
+
+                throw new Error(data?.message || `Ошибка сервера: ${res.status}`);
             }
 
-            return data.ok === true;
+            return data.ok === true || data.success === true || res.ok;
         } catch (error) {
             console.error('Send to server error:', error);
             throw error;
