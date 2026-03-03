@@ -270,7 +270,7 @@
                     <div class="field-error" data-error="message"></div>
                 </div>
 
-                <button type="submit" class="btn-primary modal-submit">Отправить</button>
+                <button style="margin: 0;" type="submit" class="btn-primary modal-submit">Отправить</button>
 
                 <div class="form-error" id="calcFormError" style="display:none;"></div>
             </form>
