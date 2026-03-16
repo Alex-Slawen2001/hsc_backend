@@ -13,3 +13,6 @@
 @section('content')
 @include('pages._systems_content')
 @endsection
+@push('scripts')
+    <script src="/styles/js/systems.js"></script>
+@endpush
