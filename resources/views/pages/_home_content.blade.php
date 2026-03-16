@@ -205,7 +205,7 @@
 
 <section class="section bg-soft">
     <div class="container">
-        <h2>Новости компании</h2>
+        <h2 style="margin-bottom: 25px;">Новости компании</h2>
 
         <div class="grid-news">
             <article class="news-card">
