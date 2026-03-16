@@ -70,7 +70,7 @@
 
 <section class="section">
     <div class="container">
-        <h2 style="margin-bottom: 10px;">Каталог решений для дронов</h2>
+        <h2 style="margin-bottom: 25px;">Каталог решений для дронов</h2>
 
         <div class="grid-products">
 
