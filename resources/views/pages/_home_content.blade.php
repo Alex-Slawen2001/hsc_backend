@@ -456,26 +456,26 @@
         <form id="consultForm">
             <div class="consult-grid">
                 <div class="consult-field full">
-                    <textarea name="message" id="messageField" placeholder="Введите ваше сообщение*" required=""></textarea>
+                    <textarea name="Message" id="messageField" placeholder="Введите ваше сообщение*" required=""></textarea>
                     <div class="error-message" id="messageError" style="display: none;"></div>
                 </div>
 
                 <div class="consult-field">
-                    <input type="text" name="name" id="nameField" placeholder="Ваше имя*" required="">
+                    <input type="text" name="Name" id="nameField" placeholder="Ваше имя*" required="">
                     <div class="error-message" id="nameError" style="display: none;"></div>
                 </div>
 
                 <div class="consult-field">
-                    <input type="email" name="email" id="emailField" placeholder="Ваш e-mail">
+                    <input type="email" name="Email" id="emailField" placeholder="Ваш e-mail">
                     <div class="error-message" id="emailError" style="display: none;"></div>
                 </div>
 
                 <div class="consult-field">
-                    <input type="tel" name="phone" id="phoneField" placeholder="Телефон">
+                    <input type="tel" name="Phone" id="phoneField" placeholder="Телефон">
                     <div class="error-message" id="phoneError" style="display: none;"></div>
                 </div>
                 <div class="consult-field">
-                    <input type="text" name="company" id="companyField" placeholder="Название вашей компании" required="">
+                    <input type="text" name="Company" id="companyField" placeholder="Название вашей компании" required="">
                     <div class="error-message" id="companyError" style="display: none;"></div>
                 </div>
 
