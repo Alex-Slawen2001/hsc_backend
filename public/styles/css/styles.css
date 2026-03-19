@@ -2440,3 +2440,45 @@ body {
 /*        text-align: center;*/
 /*    }*/
 /*}*/
+h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+h3 {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 22px;
+    font-weight: 500;
+}
+body {
+    font-size: 16px;
+    font-weight: 400;
+    color: #E0E0E0;
+    line-height: 1.6;
+}
+
+.text-secondary {
+    color: #A0A0A0;
+}
+.button {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: none;
+}
+/*:root {*/
+/*    --text-primary: #E0E0E0;*/
+/*    --text-secondary: #A0A0A0;*/
+/*    --text-muted: #777777;*/
+/*}*/
